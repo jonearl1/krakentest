@@ -12,7 +12,8 @@ Don't worry if you haven't used Swagger before, it's just a standard way to docu
 to [https://editor.swagger.io/](https://editor.swagger.io/) and pasting the contents of `api.yaml` into the panel on the
 left.
 
-There are three endpoints in this file:
+There are three endpoints in file:///home/home/Downloads/api.yaml
+this file:
 
 1. `GET /outages` which returns all outages in our system
 2. `GET /site-info/{siteId}` which returns specific information about a site
@@ -26,7 +27,6 @@ Your task is to write a small program that:
    devices in the site information
 4. For the remaining outages, it should attach the display name of the device in the site information to each appropriate outage
 5. Sends this list of outages to `POST /site-outages/{siteId}` for the site with the ID `norwich-pear-tree`
-
 
 ### Example
 
@@ -117,27 +117,27 @@ We should send the following to `POST /site-outages/kingfisher`:
 
 We would like you to produce:
 
-* A small program that solves the problem mentioned above
-* A suite of appropriate unit tests
-* A `README.md` file that documents what you have produced and explains how to run the program and tests (including installing any dependencies)
+- A small program that solves the problem mentioned above
+- A suite of appropriate unit tests
+- A `README.md` file that documents what you have produced and explains how to run the program and tests (including installing any dependencies)
 
-* Once you have a complete solution, please commit into a git repo that can be accessed by Kraken Flex. Email your recruitment contact with a link to this repository so that your suubmission can be reviewed. 
+- Once you have a complete solution, please commit into a git repo that can be accessed by Kraken Flex. Email your recruitment contact with a link to this repository so that your suubmission can be reviewed.
 
-Thank you. 
+Thank you.
 
 ### Bonus Requirements
 
-* The API will occasionally return 500 status codes. Can you implement a solution that is resilient to this scenario?
+- The API will occasionally return 500 status codes. Can you implement a solution that is resilient to this scenario?
 
 ### Tips and Things to Note
 
-* Make sure to include the provided API key in each request that you send. For example, run the following to test
+- Make sure to include the provided API key in each request that you send. For example, run the following to test
   this out:
   ```bash
   curl https://api.krakenflex.systems/interview-tests-mock-api/v1/outages -H "x-api-key: <API KEY>"
   ```
-* Each endpoint has the base path `https://api.krakenflex.systems/interview-tests-mock-api/v1/`.
-* If you are unsure of the schemas required, take a look at the `api.yaml` provided.
-* You will only get a 200 success response from `POST /site-outages/{siteId}` if the payload is correct.
+- Each endpoint has the base path `https://api.krakenflex.systems/interview-tests-mock-api/v1/`.
+- If you are unsure of the schemas required, take a look at the `api.yaml` provided.
+- You will only get a 200 success response from `POST /site-outages/{siteId}` if the payload is correct.
 
 **Good luck!**
