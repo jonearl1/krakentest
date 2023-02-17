@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const krakenApi = 'https://api.krakenflex.systems/interview-tests-mock-api/v1';
+const krakenApi = 'https://api.krakenflex.systems/interview-tests-mock-api/v1/outages';
 
 function getOutages() {
   axios.get(krakenApi);
