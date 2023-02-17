@@ -26,6 +26,7 @@ describe('Outage Service', () => {
   });
 
   it('should call kraken api', () => {
+    getOutages();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(krakenApi);
   });
