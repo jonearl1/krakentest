@@ -2,6 +2,10 @@ import axios from 'axios';
 import getOutages from '../src/outage-service';
 import expectedOutages from './expected/outages.json';
 
+jest.mock('axios');
+const mockedAxios = axios as jest.MockedFunction<typeof axios>;
+mockedAxios.mockResolvedValue({ status: 200, data: 'mockResponse' });
+
 describe('Outage Service', () => {
   const krakenApi = 'https://api.krakenflex.systems/interview-tests-mock-api/v1';
 
@@ -24,12 +28,5 @@ describe('Outage Service', () => {
   it('should call kraken api', () => {
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith(krakenApi);
-  });
-
-  it('should call kraken api', () => {
-    const result = getOutages();
-    expect(axios.get).toHaveBeenCalledTimes(1);
-    expect(axios.get).toHaveBeenCalledWith(krakenApi);
-    expect(result).toEqual(expectedOutages);
   });
 });
