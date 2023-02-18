@@ -27,6 +27,19 @@ class OutageService {
     });
     return filteredOutages;
   }
+
+  async getSiteInfo() {
+    const response = await axios.get(
+      'https://api.krakenflex.systems/interview-tests-mock-api/v1/site-info/kingfisher',
+      {
+        headers: {
+          accept: 'application/json',
+          'x-api-key': this.apiKey,
+        },
+      }
+    );
+    return response.data;
+  }
 }
 
 export default OutageService;
