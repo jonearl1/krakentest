@@ -1,13 +1,14 @@
 import axios from 'axios';
 import mockedOutages from './outages-mock.json';
 import mockedKingfisherSiteInfo from './kingfisher-mock.json';
+import mockedNorwichPearTreeSiteInfo from './norwich-pear-tree-mock.json';
 import expectedOutages from './expected-all-outages.json';
 import expectedOutages2022 from './expected-outages-2022.json';
 import OutageService from '../../src/outage-service';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-let outageService = new OutageService();
+const outageService = new OutageService();
 
 describe('Outage Service', () => {
   beforeEach(() => {
@@ -29,14 +30,18 @@ describe('Outage Service', () => {
     });
   });
   describe('Get Site Info', () => {
-    beforeEach(() => {
-      mockedAxios.get.mockResolvedValue({ status: 200, data: mockedKingfisherSiteInfo });
-    });
+    const krakenApi = 'https://api.krakenflex.systems/interview-tests-mock-api/v1/site-info';
     it('should get info from site kingfisher ', async () => {
-      const krakenApi = 'https://api.krakenflex.systems/interview-tests-mock-api/v1/site-info/kingfisher';
-      const result = await outageService.getSiteInfo();
-      expect(axios.get).toHaveBeenCalledWith(krakenApi, expect.anything());
+      mockedAxios.get.mockResolvedValue({ status: 200, data: mockedKingfisherSiteInfo });
+      const result = await outageService.getSiteInfo('kingfisher');
+      expect(axios.get).toHaveBeenCalledWith(`${krakenApi}/kingfisher`, expect.anything());
       expect(result).toEqual(mockedKingfisherSiteInfo);
+    });
+    it('should get info from site norwich pear tree ', async () => {
+      mockedAxios.get.mockResolvedValue({ status: 200, data: mockedNorwichPearTreeSiteInfo });
+      const result = await outageService.getSiteInfo('norwich-pear-tree');
+      expect(axios.get).toHaveBeenCalledWith(`${krakenApi}/norwich-pear-tree`, expect.anything());
+      expect(result).toEqual(mockedNorwichPearTreeSiteInfo);
     });
   });
 });

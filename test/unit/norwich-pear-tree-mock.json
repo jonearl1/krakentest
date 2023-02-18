@@ -1,0 +1,14 @@
+{
+  "id": "norwich-pear-tree",
+  "name": "Norwich Pear Tree",
+  "devices": [
+    {
+      "id": "002b28fc-283c-47ec-9af2-ea287336dc1b",
+      "name": "Battery 1"
+    },
+    {
+      "id": "27820d4a-1bc4-4fc1-a5f0-bcb3627e94a1",
+      "name": "Battery 2"
+    }
+  ]
+}
