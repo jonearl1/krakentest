@@ -42,9 +42,14 @@ class OutageService {
     const outages = await this.filterOutagesByStartDate(await this.getOutages());
     const siteInfo = await this.getSiteInfo(siteId);
 
-    return outages.filter((outage: Outage) =>
+    const filteredOutages = outages.filter((outage: Outage) =>
       siteInfo.devices.find((device) => device.id === outage.id)
     );
+
+    return filteredOutages.map((outage) => {
+      const matchingDevice = siteInfo.devices.find((device) => device.id === outage.id);
+      return { ...outage, ...matchingDevice };
+    });
   }
 
   private async filterOutagesByStartDate(outages: Outage[]) {

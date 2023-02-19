@@ -44,10 +44,11 @@ describe('Outage Service', () => {
   describe('Get Outages From Site', () => {
     const outagesEndpoint = 'https://api.krakenflex.systems/interview-tests-mock-api/v1/outages';
     const siteInfoEndpoint = 'https://api.krakenflex.systems/interview-tests-mock-api/v1/site-info';
-    it('should get info from site kingfisher ', async () => {
+    it('should get outages kingfisher and add the names of the devices', async () => {
       mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedOutages });
       mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedKingfisherSiteInfo });
       const result = await outageService.getOutagesFromSite('kingfisher');
+      console.log(result);
       expect(axios.get).toHaveBeenCalledWith(outagesEndpoint, expect.anything());
       expect(axios.get).toHaveBeenCalledWith(`${siteInfoEndpoint}/kingfisher`, expect.anything());
       expect(result).toEqual(expectedOutagesKingfisher);
