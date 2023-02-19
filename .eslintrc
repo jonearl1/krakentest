@@ -2,7 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
-  "extends": ["plugin:prettier/recommended", "airbnb", "airbnb-typescript"],
+  "extends": ["airbnb", "airbnb-typescript", "prettier"],
   "rules": {
     "prettier/prettier": ["error"],
     "prefer-template": 2,
