@@ -41,7 +41,6 @@ class OutageService {
   async getOutagesFromSite(siteId: string): Promise<Outage[]> {
     const outages = await this.filterOutagesByStartDate(await this.getOutages());
     const siteInfo = await this.getSiteInfo(siteId);
-
     const filteredOutages = outages.filter((outage: Outage) =>
       siteInfo.devices.find((device) => device.id === outage.id)
     );

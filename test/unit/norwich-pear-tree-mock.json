@@ -3,12 +3,16 @@
   "name": "Norwich Pear Tree",
   "devices": [
     {
-      "id": "002b28fc-283c-47ec-9af2-ea287336dc1b",
-      "name": "Battery 1"
+      "id": "04ccad00-eb8d-4045-8994-b569cb4b64c1",
+      "name": "Solar Panel 1"
     },
     {
-      "id": "27820d4a-1bc4-4fc1-a5f0-bcb3627e94a1",
-      "name": "Battery 2"
+      "id": "cf82c11d-cac3-4ec2-828a-8df96616dede",
+      "name": "Solar Panel 2"
+    },
+    {
+      "id": "9ed11921-1c5b-40f4-be66-adb4e2f016bd",
+      "name": "Solar Panel 3"
     }
   ]
 }
