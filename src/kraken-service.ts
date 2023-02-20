@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios';
+import KrakenForbiddenError from './error/kraken-forbidden-error';
 import { Outage, SiteInfo } from './outage-types';
 
 class KrakenService {
@@ -7,8 +9,12 @@ class KrakenService {
   apiKey = process.env.KRAKEN_API_KEY;
 
   async getOutages(): Promise<Outage[]> {
-    const response = await axios.get(`${this.krakenApi}/outages`, this.getApiKeyHeaders());
-    return response.data;
+    try {
+      const response = await axios.get(`${this.krakenApi}/outages`, this.getApiKeyHeaders());
+      return response.data;
+    } catch (error) {
+      throw this.handleAxiosError(error);
+    }
   }
 
   async sendOutages(siteId: string, outages: Outage[]): Promise<void> {
@@ -31,5 +37,13 @@ class KrakenService {
       },
     };
   }
+
+  private handleAxiosError(error: Error | unknown): Error {
+    if (axios.isAxiosError(error)) {
+      return new KrakenForbiddenError(error);
+    }
+    return error as Error;
+  }
 }
+
 export default KrakenService;

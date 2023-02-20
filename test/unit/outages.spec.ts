@@ -1,10 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import mockedOutages from './outages-mock.json';
 import mockedKingfisherSiteInfo from './kingfisher-mock.json';
 import expectedOutagesKingfisher from './expected-outages-kingfisher.json';
 import mockedNorwichSiteInfo from './norwich-pear-tree-mock.json';
 import expectedOutagesNorwich from './expected-outages-norwich.json';
 import OutageService from '../../src/outage-service';
+import KrakenError from '../../src/error/kraken-forbidden-error';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -19,12 +20,12 @@ const siteOutagesEndpoint =
   'https://api.krakenflex.systems/interview-tests-mock-api/v1/site-outages';
 
 describe('Outage Service', () => {
-  beforeEach(() => {
-    mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedOutages });
-    mockedAxios.post.mockResolvedValueOnce({ status: 200, data: {} });
-  });
-  describe('Outages From Site kingfisher', () => {
-    it('should send site outages with device ids ', async () => {
+  describe('Site device outages', () => {
+    beforeEach(() => {
+      mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedOutages });
+      mockedAxios.post.mockResolvedValueOnce({ status: 200, data: {} });
+    });
+    it('should send kingfisher site outages with device ids', async () => {
       mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedKingfisherSiteInfo });
 
       await outageService.getOutagesFromSite('kingfisher');
@@ -37,10 +38,7 @@ describe('Outage Service', () => {
         apiKeyHeader
       );
     });
-  });
-
-  describe('Outages From Site norwich', () => {
-    it('should get outages from norwich and add the names of the devices', async () => {
+    it('should send norwhich site outages with device ids', async () => {
       mockedAxios.get.mockResolvedValueOnce({ status: 200, data: mockedNorwichSiteInfo });
 
       await outageService.getOutagesFromSite('norwich');
@@ -53,5 +51,35 @@ describe('Outage Service', () => {
         apiKeyHeader
       );
     });
+  });
+
+  it('throw handle 403 error and add addition information', async () => {
+    mockedAxios.isAxiosError.mockReturnValue(true);
+    mockedAxios.get.mockImplementationOnce(() => {
+      const response: AxiosResponse = {
+        data: { message: 'Forbidden' },
+        status: 403,
+      } as AxiosResponse;
+      const axiosError = {
+        message: 'Request failed with status code 403',
+        config: {},
+        request: {},
+        response,
+      } as AxiosError<any>;
+      throw axiosError;
+    });
+
+    let err = null;
+    try {
+      await outageService.getOutagesFromSite('norwich');
+    } catch (error) {
+      err = error;
+    }
+
+    expect(err).toBeTruthy();
+    const krakenError = err as KrakenError;
+    expect(krakenError.message).toEqual(
+      'Request failed with status code 403, please check your API key'
+    );
   });
 });

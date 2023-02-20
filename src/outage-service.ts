@@ -14,6 +14,7 @@ class OutageService {
     const outages = await this.filterOutagesByStartDate(await this.krakenService.getOutages());
 
     const siteInfo = await this.krakenService.getSiteInfo(siteId);
+
     const filteredOutages = outages.filter((outage: Outage) =>
       siteInfo.devices.find((device: Device) => device.id === outage.id)
     );

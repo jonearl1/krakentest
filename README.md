@@ -26,3 +26,7 @@ As the method of triggering or running the code ( or type of infrastructure ), I
 # Extra requirements
 
 As the API key is required to make any of the requests, I have chosen to reference it from an environment variable to avoid any attempt at committing it to source control. Please set KRAKEN_API_KEY to a valid key before attempting to run the tests.
+
+# Error handling
+
+For the 4xx errors, there is no obvious requirement for the code to continue running after receiving one. I have added a handler for 403 errors to demonstrate how they could potentially be caught and have additional logging added to them, using a custom error.
